@@ -493,10 +493,10 @@ internal class InheritDocProcessor
 						continue;
 					}
 
-					if (refCref.Contains(xrd.GetAttribute(DocAttributeNames.Name.LocalName)))
+					//if (refCref.Contains(xrd.GetAttribute(DocAttributeNames.Name.LocalName)))
 						doc.Root.Add(XNode.ReadFrom(xrd));
-					else
-						xrd.Skip();
+					//else
+					//	xrd.Skip();
 				}
 			}
 			catch (XmlException ex)
