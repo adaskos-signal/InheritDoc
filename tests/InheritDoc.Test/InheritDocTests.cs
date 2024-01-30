@@ -23,7 +23,7 @@ public class InheritDocTests
 
 	static readonly string assemblyPath = typeof(InheritDocTests).Assembly.Location;
 	static readonly string documentPath = Path.Combine(Path.GetDirectoryName(assemblyPath), Path.GetFileNameWithoutExtension(assemblyPath) + ".xml");
-	static readonly string[] referencePaths = new[] { Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), corlibPath.Replace('\\', Path.DirectorySeparatorChar)), typeof(InheritDocProcessor).Assembly.Location };
+	static readonly string[] referencePaths = new[] { Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), corlibPath.Replace('\\', Path.DirectorySeparatorChar)), typeof(InheritDocProcessor).Assembly.Location, typeof(ExternalDocumentation.Test.EnumCrefEnumExternal).Assembly.Location };
 	static readonly DebugLogger logger = new();
 
 	static XElement processedDocs;
@@ -339,6 +339,37 @@ public class InheritDocTests
 		bool warn = logger.Warnings.Any(w => w.code == ErrorCodes.NoBase && w.msg.Contains("P:" + W.P_ID_NotInherited));
 		Assert.IsFalse(warn);
 	}
+
+	[TestMethod]
+	public void EnumInheritInternalEnum(){
+		var ele = getDocElement($"F:{nameof(EnumSut)}.{nameof(EnumSut.A)}", "summary");
+		Assert.IsNotNull(ele);
+	}
+
+	[TestMethod]
+	public void EnumInheritSystemEnum(){
+		var ele = getDocElement($"F:{nameof(EnumSut)}.{nameof(EnumSut.B)}", "summary");
+		Assert.IsNotNull(ele);
+	}
+
+	[TestMethod]
+	public void EnumInheritInternalField(){
+		var ele = getDocElement($"F:{nameof(EnumSut)}.{nameof(EnumSut.C)}", "summary");
+		Assert.IsNotNull(ele);
+	}
+
+	[TestMethod]
+	public void EnumInheritExternalEnum(){
+		var ele = getDocElement($"F:{nameof(EnumSut)}.{nameof(EnumSut.D)}", "summary");
+		Assert.IsNotNull(ele);
+	}
+
+	[TestMethod]
+	public void EnumInheritExternalField(){
+		var ele = getDocElement($"F:{nameof(EnumSut)}.{nameof(EnumSut.E)}", "summary");
+		Assert.IsNotNull(ele);
+	}
+
 
 	private static XElement? getDocElement(string docID, string xpath) =>
 		processedDocs.Elements("member").FirstOrDefault(m => (string)m.Attribute("name") == docID)?.XPathSelectElement(xpath);

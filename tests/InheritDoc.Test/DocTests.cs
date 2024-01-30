@@ -360,3 +360,38 @@ internal class ImplementsICollection : ICollection<string>
 	IEnumerator<string> IEnumerable<string>.GetEnumerator() => default;
 	IEnumerator IEnumerable.GetEnumerator() => default;
 }
+
+/// <summary>system under test for enums.</summary>
+public enum EnumSut : byte
+{
+    /// <inheritdoc cref="EnumCrefEnumInternal.A"/>
+	A = 1,
+
+	/// <inheritdoc cref="AttributeTargets.Enum"/>
+	B = 2,
+
+	/// <inheritdoc cref="EnumCrefClassInternal.C"/>
+	C = 3,
+
+	/// <inheritdoc cref="ExternalDocumentation.Test.EnumCrefEnumExternal.D"/>
+	D = 4,
+
+	/// <inheritdoc cref="ExternalDocumentation.Test.EnumCrefClassExternal.E"/>
+	E = 5,
+}
+
+/// <summary>enum referenced by enum, same project.</summary>
+public enum EnumCrefEnumInternal
+{
+    /// <summary>A summary.</summary>
+	A = 1,
+}
+
+/// <summary>class referenced by enum, same project.</summary>
+public class EnumCrefClassInternal
+{
+	/// <summary>
+	/// C summary
+	/// </summary>
+	public int C = 3;
+}

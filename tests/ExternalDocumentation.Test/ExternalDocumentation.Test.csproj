@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net6.0</TargetFrameworks>
+		<TargetFrameworks Condition="'$(OS)'=='Windows_NT'">net6.0;net48;</TargetFrameworks>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+</Project>
